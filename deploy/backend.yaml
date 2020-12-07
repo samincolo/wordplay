@@ -1,0 +1,39 @@
+#BACKEND SERVICE & DEPLOYMENT DEFINITION
+
+
+#CREATE DEPLOYMENT
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec: 
+  selector:
+    matchLabels:
+      app: wordplay
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: wordplay
+        tier: backend
+    spec: 
+      containers:
+        - name: webster
+          image: samincolo/webster:latest
+          ports: 
+          - containerPort: 5000
+
+#EXPOSE SERVICE
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: backend
+spec: 
+  selector: 
+    app: wordplay
+    tier: backend
+  ports:
+  - port: 5000

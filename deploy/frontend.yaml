@@ -1,0 +1,38 @@
+# FRONTEND SERVICE & DEPLOYMENT DEFINITIONS
+
+
+#FRONTEND DEPLOYMENT
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: frontend
+spec: 
+  selector: 
+    matchLabels: 
+      app: wordplay
+      tier: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels: 
+        app: wordplay
+        tier: frontend
+    spec:
+      containers:
+      - name: ui
+        image: samincolo/ui:latest
+
+#EXPOSE FRONTEND
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: frontend
+spec:
+  selector:
+    app: wordplay
+    tier: frontend
+  ports:
+  - port: 80
+  type: NodePort
